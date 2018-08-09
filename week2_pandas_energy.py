@@ -155,8 +155,27 @@ ContinentDict  = {'China':'Asia',
                   'Australia':'Australia', 
                   'Brazil':'South America'}
 
+print(set(ContinentDict.values()))
 z = new_df.copy()
-y = z.groupby(by = ContinentDict, axis = 1)
-#print(y.sum())
-#z['sum'] = summed
-#print(z)
+y = z.groupby(ContinentDict)
+names = []
+num = []
+s = []
+m = []
+std = []
+for group_name, data in y:
+    names.append(group_name)
+    num.append(len(data.index))
+    s.append(data['2015'].sum())
+    m.append(data['2015'].mean())
+    std.append(data['2015'].std())
+    #print ('Continent: %s' % group_name)
+    #print ('Number of countries: %s' % len(data.index))
+    #print ('sum est pop: %s' % data['2015'].sum())
+    #print ('mean est pop: %s' % data['2015'].mean())
+    #print ('std dev est pop: %s' % data['2015'].std())
+zz = pd.DataFrame(data = np.transpose([num, s, m, std]), index = names, columns = ['size', 'sum', 'mean', 'std'])
+
+##Q12
+#Cut % Renewable into 5 bins.  Group Top15 by Continent, as well as these new %
+#Renewable bins.  How many countries in each bin?
